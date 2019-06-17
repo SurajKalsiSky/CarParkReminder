@@ -12,6 +12,6 @@ export default class SettingsScreen extends React.Component {
      * content, we just wanted to give you a quick view of your config */
     // return <ExpoConfigView />;
 
-    return <Text>Suraj!</Text>;
+    return <Text>Suraj2!</Text>;
   }
 }

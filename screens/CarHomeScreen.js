@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View
 } from "react-native";
+import MyView from "../components/MyView";
 
 export default class CarHomeScreen extends Component {
   static navigationOptions = {
@@ -21,7 +22,12 @@ export default class CarHomeScreen extends Component {
   };
 
   state = {
-    floorNumber: null
+    currentFloorNumber: null,
+    showFloorSaved: false,
+    floors: [
+      { floorLabel: "Floor 1", floorValue: 1 },
+      { floorLabel: "Floor 2", floorValue: 2 }
+    ]
   };
 
   render() {
@@ -39,11 +45,11 @@ export default class CarHomeScreen extends Component {
 
           <View style={styles.pickerContainer}>
             <Picker
-              selectedValue={this.state.floorNumber}
+              selectedValue={this.state.currentFloorNumber}
               style={{ height: 100, width: 300 }}
               mode={"dropdown"}
               onValueChange={(itemValue, itemIndex) =>
-                this.setState({ floorNumber: itemValue })
+                this._handleOnClick(itemValue, itemIndex)
               }
             >
               <Picker.Item label="Floor 1" value="1" />
@@ -52,21 +58,30 @@ export default class CarHomeScreen extends Component {
               <Picker.Item label="Floor 4" value="4" />
             </Picker>
           </View>
-          <View style={styles.floorSavedContainer}>
+          <MyView
+            showFloorSaved={this.state.showFloorSaved}
+            style={styles.floorSavedContainer}
+          >
             <Text style={styles.floorSavedText1}>Floor number saved!</Text>
             <Text style={styles.floorSavedText2}>
               Will remind you where you parked when you come back to the car
               park.
             </Text>
-          </View>
+          </MyView>
         </ScrollView>
       </View>
     );
   }
 
-  _renderFlatlist = () => {
-    let data = [{ key: "a" }, { key: "b" }];
-    return data;
+  _handleOnClick = (itemValue, itemIndex) => {
+    this.setState({ currentFloorNumber: itemValue, showFloorSaved: true });
+    setTimeout(() => {
+      this.setState({ showFloorSaved: false });
+    }, 4000);
+  };
+
+  _renderPickerItems = () => {
+    return <Picker.Item label="Floor 1" value="1" />;
   };
 }
 
@@ -92,11 +107,11 @@ const styles = StyleSheet.create({
     paddingTop: 50
   },
   floorSavedContainer: {
-    alignItems: "center",
-    paddingTop: 55
+    alignItems: "center"
   },
   floorSavedText1: {
     fontSize: 24,
+    paddingTop: 50,
     color: "rgba(96,100,109, 1)",
     textAlign: "center"
   },
