@@ -8,6 +8,7 @@ import {
   View
 } from "react-native";
 import MyView from "../components/MyView";
+import getFloors from "../models/CarParkModel";
 
 export default class CarHomeScreen extends Component {
   static navigationOptions = {
@@ -24,10 +25,7 @@ export default class CarHomeScreen extends Component {
   state = {
     currentFloorNumber: null,
     showFloorSaved: false,
-    floors: [
-      { floorLabel: "Floor 1", floorValue: 1 },
-      { floorLabel: "Floor 2", floorValue: 2 }
-    ]
+    floors: getFloors()
   };
 
   render() {
@@ -52,10 +50,15 @@ export default class CarHomeScreen extends Component {
                 this._handleOnClick(itemValue, itemIndex)
               }
             >
-              <Picker.Item label="Floor 1" value="1" />
-              <Picker.Item label="Floor 2" value="2" />
-              <Picker.Item label="Floor 3" value="3" />
-              <Picker.Item label="Floor 4" value="4" />
+              {this.state.floors.map(v => {
+                return (
+                  <Picker.Item
+                    key={v.floorValue.toString()}
+                    label={v.floorLabel}
+                    value={v.floorValue}
+                  />
+                );
+              })}
             </Picker>
           </View>
           <MyView
@@ -79,16 +82,12 @@ export default class CarHomeScreen extends Component {
       this.setState({ showFloorSaved: false });
     }, 4000);
   };
-
-  _renderPickerItems = () => {
-    return <Picker.Item label="Floor 1" value="1" />;
-  };
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff000"
+    backgroundColor: "#E5E7E9"
   },
   contentContainer: {
     paddingTop: 120
