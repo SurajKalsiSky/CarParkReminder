@@ -21,14 +21,30 @@ export default class CarHomeScreen extends Component {
       fontWeight: "bold"
     }
   };
-
   state = {
     currentFloorNumber: null,
     showFloorSaved: false,
-    floors: getFloors()
+    floors: getFloors(this.props.navigation.getParam("numberOfFloors", 6))
   };
 
+  componentDidUpdate(prevProps) {
+    console.log("componentDidUpdate");
+    console.log(this.props.navigation.state.params.numberOfFloors);
+    console.log(prevProps.navigation.state.params.numberOfFloors);
+    if (
+      this.props.navigation.state.params.numberOfFloors !==
+      prevProps.navigation.state.params.numberOfFloors
+    ) {
+      this.setState({
+        floors: getFloors(this.props.navigation.state.params.numberOfFloors)
+      });
+    }
+  }
+
   render() {
+    {
+      console.log(this);
+    }
     return (
       <View style={styles.container}>
         <ScrollView
@@ -77,6 +93,9 @@ export default class CarHomeScreen extends Component {
   }
 
   _handleOnClick = (itemValue, itemIndex) => {
+    console.log("_handleOnClick");
+    console.log(itemValue);
+    console.log(itemIndex);
     this.setState({ currentFloorNumber: itemValue, showFloorSaved: true });
     setTimeout(() => {
       this.setState({ showFloorSaved: false });

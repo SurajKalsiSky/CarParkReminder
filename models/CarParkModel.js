@@ -1,17 +1,16 @@
-let numberOfFloors = 6;
-let floors = [];
-
-const getFloors = () => {
-  let tempFloors = [
-    { floorLabel: "Floor 1", floorValue: 1 },
-    { floorLabel: "Floor 2", floorValue: 2 },
-    { floorLabel: "Floor 3", floorValue: 3 },
-    { floorLabel: "Floor 4", floorValue: 4 },
-    { floorLabel: "Floor 5", floorValue: 5 }
-  ];
-  return tempFloors;
+const getFloors = numberOfFloors => {
+  let floors = [];
+  for (let i = 1; i <= numberOfFloors; i++) {
+    floors.push(_generateLabel(i));
+  }
+  return floors;
 };
 
-const _generateLabel = floorNumber => {};
+const _generateLabel = floorNumber => {
+  return {
+    floorLabel: `Floor ${floorNumber}`,
+    floorValue: floorNumber
+  };
+};
 
 export default getFloors;

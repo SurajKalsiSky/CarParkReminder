@@ -11,8 +11,9 @@ import CarHomeScreen from "../screens/CarHomeScreen";
 import LinksScreen from "../screens/LinksScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 
+let numberOfFloors = 5;
 const HomeStack = createStackNavigator({
-  Home: CarHomeScreen
+  Home: { screen: CarHomeScreen, params: { numberOfFloors } }
 });
 
 HomeStack.navigationOptions = {
@@ -43,8 +44,16 @@ LinksStack.navigationOptions = {
   )
 };
 
+// remove
+const settingsCallback = numberOfFloorsFromSettings => {
+  numberOfFloors = numberOfFloorsFromSettings;
+};
+
 const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen
+  Settings: {
+    screen: SettingsScreen,
+    params: { settingsCallback: settingsCallback }
+  }
 });
 
 SettingsStack.navigationOptions = {
